@@ -1,0 +1,11 @@
+-- CreateTable
+CREATE TABLE `Pets` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `photo` VARCHAR(50) NOT NULL,
+    `race` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `Pets` ADD CONSTRAINT `Pets_race_fkey` FOREIGN KEY (`race`) REFERENCES `Races`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

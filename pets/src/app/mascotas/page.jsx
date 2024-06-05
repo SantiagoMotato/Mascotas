@@ -37,12 +37,41 @@ function page() {
               <div className="mt-4">
                 {
                   pets.map(pet => (
-                    <div key={pet.id} className="flex bg-blue-300 w-full h-22 mb-4 rounded-xl px-4 text-xs">
+                    <div key={pet.id} className="flex bg-slate-400 hover:bg-slate-300 transition-all  w-full h-22 mb-4 rounded-xl px-4 py-2 text-xs">
                         <img src="photo-sm-1.svg" alt="" />
                       <div className="grid grid-cols-1 grid-rows-auto ml-4">
                         <p>Raza: {pet.race_id.name}</p>
                         <p>Categoria: {pet.category_id.name}</p>
                         <p>Género: {pet.gender_id.name}</p>
+                      </div>
+                      {/* <div className="flex w-8 h-8 gap-2 ml-8 mt-5">
+                        <img src="btn-show.svg" alt="" onClick={()=>{
+                          alert('Look!')
+                        }}/>
+                        <img src="btn-edit.svg" alt="" onClick={()=>{
+                          alert('Edit')
+                        }}/>
+                        <img src="btn-delete.svg" alt="" onClick={()=>{
+                          alert('Delete!')
+                        }}/>
+                      </div> */}
+                      <div className="flex w-8 h-8 gap-2 ml-8 mt-5">
+                          <img src="btn-show.svg" alt="" onClick={()=>{
+                            alert('Look!')
+                          }}/>
+                          <img src="btn-edit.svg" alt="" onClick={()=>{
+                            alert('Edit')
+                          }}/>
+                        {params.id && (
+                          <img src="btn-delete.svg" alt="" onClick={async()=>{
+                            const res = await fetch(`localhost:3000/api/pets/${params.id}`, {
+                              method: 'DELETE'
+                            })
+                            const data = await res.json()
+                            console.log(data)
+                          }}/>
+                        )
+                        }
                       </div>
                     </div>
                   ))

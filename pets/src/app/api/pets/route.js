@@ -19,24 +19,53 @@ export async function GET(){
     }
 }
 
-export async function POST(request){
+// export async function POST(request){
+//     try {
+//         const {race_id,category_id,gender_id,photo} = await request.json();
+//         const newPet = await prisma.pets.create({
+//             data:{
+//                 race_id: { connect:{id:race_id}},
+//                 category_id: {connect:{id:category_id}},
+//                 gender_id: {connect: {id:gender_id}},
+//                 photo
+//             }
+//            /*  data:{
+//                 race_id,
+//                 category_id,
+//                 gender_id,
+//                 photo
+//             } */
+//         })
+
+//         return new Response(JSON.stringify(newPet))
+//         // return new Response.json(newPet)
+
+//     } catch (error) {
+//         return new Response(JSON.stringify({"Mesage":"Error de metodo POST" + error.message,status:500}))
+//         // return console.log(error) 
+//     }
+// }
+
+
+export async function POST(request) {
     try {
-        const {race_id,category_id,gender_id,photo} = await request.json();
-        const newPet = await prisma.pets.create({
-            data:{
-                race_id: { connect:{id:race_id}},
-                category_id: {connect:{id:category_id}},
-                gender_id: {connect: {id:gender_id}},
-                photo
-            }
-        })
-
-        return new Response(JSON.stringify(newPet))
-
+      const { nombre, raza, categoria, foto, genero } = await request.json();
+      console.log("Datos recibidos en el servidor:", { nombre, raza, categoria, foto, genero });
+  
+      const newPet = await prisma.pets.create({
+        data: {
+          race_id: { connect: { id: raza }},
+          category_id: { connect: { id: categoria }},
+          gender_id: { connect: { id: genero }},
+          photo: foto
+        }
+      });
+  
+      return new Response(JSON.stringify(newPet));
     } catch (error) {
-        return new Response(JSON.stringify({"Meesage":"Error de metodo POST" + error,status:500}))
+      return new Response(JSON.stringify({ "Message": "Error de metodo POST: " + error.message, status: 500 }));
     }
-}
+  }
 
 
 /* export async function POST(request) {

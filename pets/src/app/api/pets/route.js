@@ -6,6 +6,7 @@ export async function GET(){
     try {
         const res = await prisma.pets.findMany({
             select: {
+                id:true,
                 category_id: {select: {name: true}},
                 race_id: {select: {name: true}},
                 gender_id: {select: {name: true}},

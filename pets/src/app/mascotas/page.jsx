@@ -52,15 +52,17 @@ function page({params}) {
                         }}/>
                         <img src="btn-edit.svg" alt="" onClick={()=>{
                           alert('Edit')
+                          console.log(pet.id)
                         }}/>
                         <img src="btn-delete.svg" alt="" onClick={async()=>{
-                          //  const res = await fetch(`http://localhost:3000/api/pets/${pet.id}`, {
-                          //   method:"DELETE",
-                          // })
-                          // const data = await res.json();
-                          alert('Pet ID: '+pet.id)
-                          console.log(pet.id)
-                          // console.log(data)
+                           const res = await fetch(`http://localhost:3000/api/pets/${pet.id}`, {
+                            method:"DELETE",
+                          })
+                          const data = await res.json();
+                          // alert('Pet ID: '+pet.id)
+                          // console.log(pet.id)
+                          console.log(data)
+                          router.refresh()
                         }}/>
                       </div>
                     </div>

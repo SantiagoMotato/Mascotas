@@ -8,7 +8,7 @@ async function loadPets(){
   return data;
 }
 
-function page({params}) {
+function MascotasPage({params}) {
 
   const router = useRouter();
   const [pets, setPets] = useState([]);
@@ -51,8 +51,8 @@ function page({params}) {
                           alert('Look!')
                         }}/>
                         <img src="btn-edit.svg" alt="" onClick={()=>{
-                          alert('Edit')
-                          console.log(pet.id)
+                          alert(pet.id)
+                          router.push(`/update_mascota/${pet.id}`)
                         }}/>
                         <img src="btn-delete.svg" alt="" onClick={async()=>{
                            const res = await fetch(`http://localhost:3000/api/pets/${pet.id}`, {
@@ -74,4 +74,4 @@ function page({params}) {
   )
 }
 
-export default page
+export default MascotasPage

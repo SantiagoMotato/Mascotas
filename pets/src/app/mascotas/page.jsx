@@ -38,17 +38,19 @@ function MascotasPage({params}) {
               <div className="mt-4">
                 {
                   pets.map(pet => (
-                    <div key={pet.id} className="flex bg-slate-400 hover:bg-slate-300 transition-all  w-full h-22 mb-4 rounded-xl px-4 py-2 text-xs">
+                    <div key={pet.id} className="flex bg-slate-300 hover:bg-slate-200 transition-all  w-full h-22 mb-4 rounded-xl px-4 py-2 text-xs">
                         <img src="photo-sm-1.svg" alt="" />
-                      <div className="grid grid-cols-1 grid-rows-auto ml-4">
-                        <p>Pet ID: {pet.id}</p>
-                        <p>Raza: {pet.race_id.name}</p>
-                        <p>Categoria: {pet.category_id.name}</p>
-                        <p>Género: {pet.gender_id.name}</p>
+                      <div className="grid grid-cols-1 grid-rows-auto ml-4 text-base">
+                        <h2 className="mt-4 text-blue-950">Nombre:</h2>
+                        <p className="relative bottom-3 text-blue-900">{pet.race_id.name}</p>
+                        {/* <p>Pet ID: {pet.id}</p> */}
+                        {/* <p>Categoria: {pet.category_id.name}</p>
+                        <p>Género: {pet.gender_id.name}</p> */}
                       </div>
                       <div className="flex w-8 h-8 gap-2 ml-8 mt-5">
                         <img src="btn-show.svg" alt="" onClick={()=>{
-                          alert('Look!')
+                          // alert('Look!')
+                          router.push(`/mascota/${pet.id}`)
                         }}/>
                         <img src="btn-edit.svg" alt="" onClick={()=>{
                           alert(pet.id)

@@ -59,7 +59,6 @@ function updateMascota({params}) {
           }}/>
           <form action="" className="flex flex-col gap-6" onSubmit={onSubmit}>
             <h1 className="text-center mt-8">Modificar Mascota</h1> 
-            <p>{params.id}</p>
             <img src="/icon-camera.svg" alt="" className="bg-slate-200 p-2 w-24 h-24 mx-auto rounded-full"/>
 
             <input name="nombre" id="nombre" type="text" className="p-2 bg-slate-400 text-white placeholder-blue-800 outline-none rounded-3xl" placeholder="Nombre..." onChange={(e)=> setNombre(e.target.value)} value={nombre}/>

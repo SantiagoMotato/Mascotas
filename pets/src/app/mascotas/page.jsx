@@ -25,14 +25,17 @@ function MascotasPage({params}) {
 
   return (
     <main className="flex justify-center">
-          <section  className="relative h-screen w-96 bg-cover bg-center bg-blue-950 text-white">
+          <section  className="relative h-screen w-[calc(410px)] bg-cover bg-center bg-blue-950 text-white overflow-y-auto overflow-x-hidden">
               <div className="flex justify-center font-semibold text-center mt-10 max-w-xs mx-auto">
                 <h1 className="my-auto">Administrar mascotas</h1>
-                <img src="/btn-close.svg" alt="" className="relative left-16 hover:cursor-pointer"/>
+                <img src="/btn-close.svg" alt="" className="relative left-16 hover:cursor-pointer" onClick={()=>{
+                  alert("Estás seguro de cerrar sesión?")
+                  router.push("/")
+                }}/>
               </div>
 
               <div className="w-full ml-4 mt-10">
-                <button className="bg-green-500 hover:bg-green-600 transition-all w-[calc(350px)] p-2 rounded-3xl"
+                <button className="bg-green-500 hover:bg-green-600 transition-all mx-[calc(9px)] w-[calc(350px)] p-2 rounded-3xl"
                 onClick={()=>{
                   router.push('/new_mascota')
               }}>Adicionar</button>

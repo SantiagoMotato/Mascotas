@@ -14,6 +14,7 @@ function updateMascota({params}) {
   //Variables de entorno para las traer los datos seleccionados a una mascota y para guardar el nuevo valor o genero de una mascota
   const [genders, setGenders] = useState([]);
   const [categories,setCategories] = useState([]);
+  const [races,setRaces] = useState([]);
 
   useEffect(() => {
     if(params.id){
@@ -39,6 +40,12 @@ function updateMascota({params}) {
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
+      });
+      
+    fetch('http://localhost:3000/api/races')
+      .then((res) => res.json())
+      .then((data) => {
+        setRaces(data);
       });
       
   }, [params.id]);
@@ -72,7 +79,13 @@ function updateMascota({params}) {
 
             <input name="nombre" id="nombre" type="text" className="p-2 bg-slate-400 text-white placeholder-blue-800 outline-none rounded-3xl" placeholder="Nombre..." onChange={(e) => setNombreMascota(e.target.value)} value={nombreMascota} />
           
-            <input name="raza" id="raza" type="number" className="p-2 bg-slate-400 text-white placeholder-blue-800 outline-none rounded-3xl" placeholder="Seleccione raza..." onChange={(e) => setRaza(parseInt(e.target.value))} value={race_id} />
+            {/* <input name="raza" id="raza" type="number" className="p-2 bg-slate-400 text-white placeholder-blue-800 outline-none rounded-3xl" placeholder="Seleccione raza..." onChange={(e) => setRaza(parseInt(e.target.value))} value={race_id} /> */}
+            <select name="raza" id="raza" className="p-2 bg-slate-400 text-white placeholder-blue-800 outline-none rounded-3xl" onChange={(e) => setRaza(parseInt(e.target.value))} value={race_id}>
+              <option value="">Seleccione una raza...</option>
+              {races.map((race) => (
+                <option key={race.id} value={race.id}>{race.name}</option>
+              ))}
+            </select>
 
             {/* <input name="categoria" id="categoria" type="number" className="p-2 bg-slate-400 text-white placeholder-blue-800 outline-none rounded-3xl" placeholder="Seleccione categoria..." onChange={(e) => setCategoria(parseInt(e.target.value))} value={category_id} /> */}
             <select name="categoria" id="categoria" className="p-2 bg-slate-400 text-white placeholder-blue-800 outline-none rounded-3xl" onChange={(e) => setCategoria(parseInt(e.target.value))} value={category_id}>

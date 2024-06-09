@@ -68,17 +68,17 @@ function NewMascota() {
   const onSubmit = async(e) => {
       e.preventDefault();
       
-      const nombre = e.target.elements.nombre.value;
-      const raza = parseInt(e.target.elements.raza.value);  // Convertir a entero
-      const categoria = parseInt(e.target.elements.categoria.value);  // Convertir a entero
+      const nombreMascota = e.target.elements.nombre.value;
+      const raza = parseInt(e.target.elements.raza.value);  
+      const categoria = parseInt(e.target.elements.categoria.value); 
       const foto = e.target.elements.foto.value;
-      const genero = parseInt(e.target.elements.genero.value);  // Convertir a entero
+      const genero = parseInt(e.target.elements.genero.value);  
       
-      console.log("Datos a enviar:", {nombre, raza, categoria, foto, genero});
+      console.log("Datos a enviar:", {nombreMascota, raza, categoria, foto, genero});
 
       const res = await fetch('http://localhost:3000/api/pets', {
         method: 'POST',
-        body: JSON.stringify({ nombre, raza, categoria, foto, genero }),
+        body: JSON.stringify({ nombreMascota, raza, categoria, foto, genero }),
         headers: {
           'Content-Type': 'application/json'
         }

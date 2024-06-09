@@ -52,14 +52,15 @@ export async function DELETE(request, {params}){
 export async function PUT(request, {params}){
     try {
         let id = Number(params.id);
-        const {race_id,category_id,gender_id,photo} = await request.json();
+        const {race_id,category_id,gender_id,photo,nombreMascota} = await request.json();
         const newPet = await prisma.pets.update({
             where: {id:id},
             data:{
                 race_id: { connect:{id:race_id}},
                 category_id: {connect:{id:category_id}},
                 gender_id: {connect: {id:gender_id}},
-                photo
+                photo,
+                nombreMascota
             }
         })
 

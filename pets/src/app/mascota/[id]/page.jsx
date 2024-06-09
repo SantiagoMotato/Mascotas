@@ -46,7 +46,7 @@ function MascotaPage({ params }) {
                         </thead>
                         <tbody>
                             <tr className="flex flex-col text-blue-950">
-                                <td className="text-start font-normal p-2">{petData.id}</td>
+                                <td className="text-start font-normal p-2">{petData.nombreMascota}</td>
                                 <td className="text-start font-normal p-2">{petData.race_id?.name}</td>
                                 <td className="text-start font-normal p-2">{petData.category_id?.name}</td>
                                 <td className="text-start font-normal p-2">{petData.gender_id?.name}</td>

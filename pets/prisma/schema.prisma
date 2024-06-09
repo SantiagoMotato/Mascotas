@@ -24,6 +24,7 @@ model Users{
 model Pets{
   id Int @id @default(autoincrement())
   photo String @db.VarChar(50)
+  nombreMascota String  @db.VarChar(50) @default("No hay nombre")
   race Int
   race_id Races @relation(fields: [race], references: [id])
   category Int

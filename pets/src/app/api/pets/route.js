@@ -10,7 +10,8 @@ export async function GET(){
                 category_id: {select: {name: true}},
                 race_id: {select: {name: true}},
                 gender_id: {select: {name: true}},
-                photo: true
+                photo: true,
+                nombreMascota: true
             }
         });
         console.log(res)
@@ -50,15 +51,16 @@ export async function GET(){
 
 export async function POST(request) {
     try {
-      const { nombre, raza, categoria, foto, genero } = await request.json();
-      console.log("Datos recibidos en el servidor:", { nombre, raza, categoria, foto, genero });
+      const { nombreMascota, raza, categoria, foto, genero } = await request.json();
+      console.log("Datos recibidos en el servidor:", { nombreMascota, raza, categoria, foto, genero });
   
       const newPet = await prisma.pets.create({
         data: {
           race_id: { connect: { id: raza }},
           category_id: { connect: { id: categoria }},
           gender_id: { connect: { id: genero }},
-          photo: foto
+          photo: foto,
+          nombreMascota
         }
       });
   

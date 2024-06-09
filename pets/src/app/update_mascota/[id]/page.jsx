@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 function updateMascota({params}) {
 
   const router = useRouter()
-  const [nombre, setNombre] = useState("");
+  const [nombreMascota, setNombreMascota] = useState("");
   const [race_id, setRaza] = useState("");
   const [category_id, setCategoria] = useState("");
   const [photo, setFoto] = useState("");
@@ -17,7 +17,7 @@ function updateMascota({params}) {
         fetch(`http://localhost:3000/api/pets/${params.id}`)
         .then((res) => res.json())
         .then((data) => {
-          setNombre(data.nombre);
+          setNombreMascota(data.nombreMascota);
           setRaza(data.race);
           setCategoria(data.category);
           setFoto(data.photo);
@@ -35,11 +35,11 @@ function updateMascota({params}) {
     //   const foto = e.target.elements.foto.value;
     //   const genero = parseInt(e.target.elements.genero.value);  // Convertir a entero
       
-      console.log("Datos a enviar:", {nombre, race_id, category_id, photo, gender_id});
+      console.log("Datos a enviar:", {nombreMascota, race_id, category_id, photo, gender_id});
 
       const res = await fetch(`http://localhost:3000/api/pets/${params.id}`, {
         method: 'PUT',
-        body: JSON.stringify({ nombre, race_id, category_id, photo, gender_id }),
+        body: JSON.stringify({ nombreMascota, race_id, category_id, photo, gender_id }),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -61,7 +61,7 @@ function updateMascota({params}) {
             <h1 className="text-center mt-8">Modificar Mascota</h1> 
             <img src="/icon-camera.svg" alt="" className="bg-slate-200 p-2 w-24 h-24 mx-auto rounded-full"/>
 
-            <input name="nombre" id="nombre" type="text" className="p-2 bg-slate-400 text-white placeholder-blue-800 outline-none rounded-3xl" placeholder="Nombre..." onChange={(e)=> setNombre(e.target.value)} value={nombre}/>
+            <input name="nombre" id="nombre" type="text" className="p-2 bg-slate-400 text-white placeholder-blue-800 outline-none rounded-3xl" placeholder="Nombre..." onChange={(e)=> setNombreMascota(e.target.value)} value={nombreMascota}/>
 
             <input name="raza" id="raza" type="number" className="p-2 bg-slate-400 text-white placeholder-blue-800 outline-none rounded-3xl" placeholder="Seleccione raza..." onChange={(e) => setRaza(parseInt(e.target.value))} value={race_id}/>
 

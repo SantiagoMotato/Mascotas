@@ -2,26 +2,20 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react";
 
-async function loadPets(){
-  const res = await fetch('http://localhost:3000/api/pets')
-  const data = await res.json()
-  return data;
-}
-
 function MascotasPage({params}) {
 
   const router = useRouter();
   const [pets, setPets] = useState([]);
 
+  const loadPets = async() => {
+    const res = await fetch('http://localhost:3000/api/pets')
+    const data = await res.json()
+    setPets(data)
+  }
+
   useEffect(() => {
-    const fetchData = async () => {
-      const petsData = await loadPets();
-      setPets(petsData);
-      console.log(petsData)
-    };
-    
-    fetchData();
-  }, []); // Empty dependency array means this effect runs only once, on mount
+    loadPets();
+  }, [/* pets */]); // Empty dependency array means this effect runs only once, on mount
 
   return (
     <main className="flex justify-center">
@@ -48,10 +42,7 @@ function MascotasPage({params}) {
                         <img src="photo-sm-1.svg" alt=""/>
                       <div className="grid grid-cols-1 grid-rows-auto ml-4 text-base">
                         <h2 className="mt-4 text-blue-950 w-32">{pet.nombreMascota}</h2>
-                        <p className="relative bottom-3 text-blue-900 text-sm">{pet.race_id.name}</p>
-                        {/* <p>Pet ID: {pet.id}</p> */}
-                        {/* <p>Categoria: {pet.category_id.name}</p>
-                        <p>Género: {pet.gender_id.name}</p> */}
+                        <p className="relative bottom-3 text-blue-900 text-sm w-[calc(90px)]">{pet.race_id.name}</p>
                       </div>
                       <div className="grid grid-cols-3 gap-x-1 w-full ml-20 mt-5 hover:cursor-pointer">
                         <img src="btn-show.svg" alt="" onClick={()=>{

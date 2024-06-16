@@ -32,7 +32,12 @@ function MascotaPage({ params }) {
                 }} />
                 <h1 className="text-center text-xl mt-10">Consultar Mascota</h1>
 
-                <img src="/icon-camera.svg" alt="" className="bg-slate-200 p-2 w-24 h-24 mx-auto rounded-full mt-10 mb-10" />
+                {/* <img src="/icon-camera.svg" alt="" className="bg-slate-200 p-2 w-24 h-24 mx-auto rounded-full mt-10 mb-10" /> */}
+                {petData ? (
+                <img src={petData.photo} alt="" className="bg-slate-200 p-2 w-24 h-24 mx-auto rounded-full mt-10 mb-10" />
+                ) : (
+                    <p>Loading image...</p>
+                )}
 
                 {petData ? (
                     <table className="flex bg-slate-300 gap-1 mx-6 rounded-2xl">

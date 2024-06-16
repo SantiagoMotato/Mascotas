@@ -39,13 +39,14 @@ function MascotasPage({params}) {
                 {
                   pets.map(pet => (
                     <div key={pet.id} className="flex bg-slate-300 hover:bg-slate-200 transition-all  w-[calc(350px)] mx-auto h-22 mb-4 rounded-xl px-4 py-2 text-xs">
-                        <img src="photo-sm-1.svg" alt=""/>
-                      <div className="grid grid-cols-1 grid-rows-auto ml-4 text-base">
+                        <img src={pet.photo} alt="" className="block bg-blue-500 w-16 h-16 rounded-full"/>
+                      <div className="grid grid-cols-1 grid-rows-auto ml-4 text-base bg-yellow-500 relative left-2">
                         <h2 className="mt-4 text-blue-950 w-32">{pet.nombreMascota}</h2>
                         <p className="relative bottom-3 text-blue-900 text-sm w-[calc(90px)]">{pet.race_id.name}</p>
                       </div>
-                      <div className="grid grid-cols-3 gap-x-1 w-full ml-20 mt-5 hover:cursor-pointer">
+                      <div className="grid grid-cols-3 bg-red-600 gap-x-1 w-full ml-16 mt-5 hover:cursor-pointer">
                         <img src="btn-show.svg" alt="" onClick={()=>{
+                          alert("shit!")
                           router.push(`/mascota/${pet.id}`)
                         }}/>
                         <img src="btn-edit.svg" alt="" onClick={()=>{

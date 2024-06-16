@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import {writeFile} from "fs/promises"
+import path from "path";
 
 const prisma = new PrismaClient()
 
@@ -21,80 +23,82 @@ export async function GET(){
     }
 }
 
-// export async function POST(request){
+
+// export async function POST(request) {
 //     try {
-//         const {race_id,category_id,gender_id,photo} = await request.json();
-//         const newPet = await prisma.pets.create({
-//             data:{
-//                 race_id: { connect:{id:race_id}},
-//                 category_id: {connect:{id:category_id}},
-//                 gender_id: {connect: {id:gender_id}},
-//                 photo
-//             }
-//            /*  data:{
-//                 race_id,
-//                 category_id,
-//                 gender_id,
-//                 photo
-//             } */
-//         })
-
-//         return new Response(JSON.stringify(newPet))
-//         // return new Response.json(newPet)
-
+//       const { nombreMascota, raza, categoria, foto, genero } = await request.json();
+//       console.log("Datos recibidos en el servidor:", { nombreMascota, raza, categoria, foto, genero });
+  
+//       const newPet = await prisma.pets.create({
+//         data: {
+//           race_id: { connect: { id: raza }},
+//           category_id: { connect: { id: categoria }},
+//           gender_id: { connect: { id: genero }},
+//           photo: foto,
+//           nombreMascota
+//         }
+//       });
+  
+//       return new Response(JSON.stringify(newPet));
 //     } catch (error) {
-//         return new Response(JSON.stringify({"Mesage":"Error de metodo POST" + error.message,status:500}))
-//         // return console.log(error) 
+//       return new Response(JSON.stringify({ "Message": "Error de metodo POST: " + error.message, status: 500 }));
 //     }
-// }
-
+//   }
 
 export async function POST(request) {
     try {
-      const { nombreMascota, raza, categoria, foto, genero } = await request.json();
-      console.log("Datos recibidos en el servidor:", { nombreMascota, raza, categoria, foto, genero });
-  
-      const newPet = await prisma.pets.create({
-        data: {
-          race_id: { connect: { id: raza }},
-          category_id: { connect: { id: categoria }},
-          gender_id: { connect: { id: genero }},
-          photo: foto,
-          nombreMascota
+        const formData = await request.formData();  // Aquí se analiza correctamente el FormData
+        const nombreMascota = formData.get('nombreMascota');
+        const raza = formData.get('raza');
+        const categoria = formData.get('categoria');
+        const genero = formData.get('genero');
+        const photo = formData.get('photo');
+
+        //Mensaje que avisa que no se ha cargado una foto
+        if(!photo){
+            return Response.json({message:"No se ha cargado una foto!"}, {status:400})
         }
-      });
-  
-      return new Response(JSON.stringify(newPet));
-    } catch (error) {
-      return new Response(JSON.stringify({ "Message": "Error de metodo POST: " + error.message, status: 500 }));
-    }
-  }
 
+        const bytes = await photo.arrayBuffer()
+        const buffer = Buffer.from(bytes)
+        const filePath = path.join(process.cwd(), 'public/img', photo.name)
+        writeFile(filePath, buffer)
+        // console.log("File save at", filePath)
 
-/* export async function POST(request) {
-    try {
-        const { race_id, category_id, gender_id, photo } = await request.json();
+        // console.log(filePath)
+        
+        // console.log(file);
+        // console.log(formData);
 
         const newPet = await prisma.pets.create({
-            data: {
-                race: { connect: { id: race_id } },
-                category: { connect: { id: category_id } },
-                gender: { connect: { id: gender_id } },
-                photo
-            }
+                    // data: formData
+                    // data: {
+                    //   race_id: { connect: { id: raza }},
+                    //   category_id: { connect: { id: categoria }},
+                    //   gender_id: { connect: { id: genero }},
+                    //   photo: file,
+                    //   nombreMascota
+                    // }
+
+                    data: {
+                        nombreMascota: nombreMascota,
+                        race: parseInt(raza), 
+                        category: parseInt(categoria),  
+                        gender: parseInt(genero), 
+                        photo: `/img/${photo.name}`  // Ruta en donde está la imagen guardada junto con el name que viene de 'target->name'
+                    }
+
         });
 
-        return new Response(JSON.stringify(newPet), {
-            status: 201,
-            headers: { 'Content-Type': 'application/json' }
-        });
-    } catch (error) {
+        console.log({ nombreMascota, raza, categoria, genero, photo });
+
         return new Response(JSON.stringify({
-            "Message": "Error de metodo POST: " + error.message,
-            status: 500
-        }), {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' }
-        });
+            message: "PHOTO UPLOADED!"
+        }));
+        // return new Response(JSON.stringify(newPet));
+    } catch (error) {
+        return new Response(JSON.stringify({ "Message": "Error de metodo POST: " + error.message, status: 500 }));
     }
-} */
+}
+
+

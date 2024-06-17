@@ -34,7 +34,7 @@ function MascotaPage({ params }) {
 
                 {/* <img src="/icon-camera.svg" alt="" className="bg-slate-200 p-2 w-24 h-24 mx-auto rounded-full mt-10 mb-10" /> */}
                 {petData ? (
-                <img src={petData.photo} alt="" className="bg-slate-200 p-2 w-24 h-24 mx-auto rounded-full mt-10 mb-10" />
+                <img src={petData.photo} alt="" className="bg-slate-200 p-[calc(2px)] w-44 h-44 mx-auto rounded-full mt-10 mb-10" />
                 ) : (
                     <p>Loading image...</p>
                 )}

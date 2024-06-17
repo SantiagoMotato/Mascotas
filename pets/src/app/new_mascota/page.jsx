@@ -176,7 +176,7 @@ function NewMascota() {
         // Enviar datos
         const res = await fetch('http://localhost:3000/api/pets', {
             method: 'POST',
-            body: form // Aquí se envía el FormData
+            body: form 
         });
     
         const data = await res.json();

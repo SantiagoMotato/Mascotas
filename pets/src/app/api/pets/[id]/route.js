@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import {writeFile} from "fs/promises"
+import path from "path";
 
 const prisma = new PrismaClient()
 
@@ -49,25 +51,40 @@ export async function DELETE(request, {params}){
     }
 }
 
-export async function PUT(request, {params}){
+
+export async function PUT(request, { params }) {
     try {
         let id = Number(params.id);
-        const {race_id,category_id,gender_id,photo,nombreMascota} = await request.json();
-        const newPet = await prisma.pets.update({
-            where: {id:id},
-            data:{
-                race_id: { connect:{id:race_id}},
-                category_id: {connect:{id:category_id}},
-                gender_id: {connect: {id:gender_id}},
-                photo,
-                nombreMascota
-            }
-        })
+        const formData = await request.formData();
+        const nombreMascota = formData.get('nombreMascota');
+        const raza = formData.get('raza');
+        const categoria = formData.get('categoria');
+        const genero = formData.get('genero');
+        const photo = formData.get('photo');
 
-        return Response.json({message: "Mascota actualizada!", pet:newPet})
+        if (photo && photo.arrayBuffer) {
+            const bytes = await photo.arrayBuffer();
+            const buffer = Buffer.from(bytes);
+            const filePath = path.join(process.cwd(), 'public/img', photo.name);
+            await writeFile(filePath, buffer);
 
+            const newPet = await prisma.pets.update({
+                where: { id: id },
+                data: {
+                    nombreMascota: nombreMascota,
+                    race: parseInt(raza),
+                    category: parseInt(categoria),
+                    gender: parseInt(genero),
+                    photo: `/img/${photo.name}`
+                }
+            });
+
+            return new Response(JSON.stringify({ message: "Mascota actualizada!", pet: newPet }), { status: 200 });
+        } else {
+            throw new Error('Photo is not a valid file or does not have arrayBuffer method');
+        }
     } catch (error) {
-        return new Response(JSON.stringify({"Meesage":"Error de metodo PUT" + error,status:500}))
+        return new Response(JSON.stringify({ "Meesage": "Error de metodo PUT: " + error.message, status: 500 }), { status: 500 });
     }
 }
 

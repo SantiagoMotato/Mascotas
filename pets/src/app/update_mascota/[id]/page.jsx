@@ -164,6 +164,11 @@ function updateMascota({params}) {
       .then((data) => {
         setRaces(data);
       });
+    fetch('http://localhost:3000/api/races')
+      .then((res) => res.json())
+      .then((data) => {
+        setRaces(data);
+      });
       
   }, [params.id]);
 
@@ -178,14 +183,15 @@ function updateMascota({params}) {
     e.preventDefault();
   
     const formData = new FormData();
-    formData.append('nombreMascota', nombreMascota);
-    formData.append('raza', race_id);
-    formData.append('categoria', category_id);
-    formData.append('genero', gender_id);
+    formData.set('nombreMascota', nombreMascota);
+    formData.set('raza', race_id);
+    formData.set('categoria', category_id);
+    formData.set('genero', gender_id);
+    formData.set('photo', photo);
   
-    if (photo instanceof File) {
-      formData.set('photo', photo);
-    }
+    // if (photo instanceof File) {
+    //   formData.set('photo', photo);
+    // }
   
     const res = await fetch(`http://localhost:3000/api/pets/${params.id}`, {
       method: 'PUT',
@@ -194,7 +200,7 @@ function updateMascota({params}) {
   
     const data = await res.json();
     console.log("Respuesta de la API:", data);
-    router.push('/mascotas');
+    // router.push('/mascotas');
   };
   
 
@@ -207,21 +213,22 @@ function updateMascota({params}) {
           }} />
           <form action="" className="flex flex-col gap-6" onSubmit={onSubmit}>
             <h1 className="text-center mt-8">Modificar Mascota</h1>
-            <input type="file" accept="image/*" name="photo" className="hidden" id="photo" onChange={onChangePhoto} />
+
+            <input type="file" accept="image/*" name="photo" className="hidden" id="photo" onChange={onChangePhoto}/>
                   <label htmlFor="photo">
                     {
                       photo ? (
                         <img
                           // src={URL.createObjectURL(photo)}
-                          alt="Selected Photo"
+                          // alt="Selected Photo"
                           className="bg-slate-200 p-1 w-36 h-36 mx-auto rounded-full cursor-pointer object-cover"
                           width={96}
                           height={96}
                         />
                       ) : (
                         <img
-                          src="icon-camera.svg"
-                          alt="Select Photo"
+                          src={photo}
+                          // alt="Select Photo"
                           className="bg-slate-200 p-2 w-36 h-36 mx-auto rounded-full cursor-pointer"
                         />
                       )

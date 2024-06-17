@@ -47,14 +47,13 @@ export async function GET(){
 
 export async function POST(request) {
     try {
-        const formData = await request.formData();  // Aquí se analiza correctamente el FormData
+        const formData = await request.formData();
         const nombreMascota = formData.get('nombreMascota');
         const raza = formData.get('raza');
         const categoria = formData.get('categoria');
         const genero = formData.get('genero');
         const photo = formData.get('photo');
 
-        //Mensaje que avisa que no se ha cargado una foto
         if(!photo){
             return Response.json({message:"No se ha cargado una foto!"}, {status:400})
         }
@@ -63,23 +62,9 @@ export async function POST(request) {
         const buffer = Buffer.from(bytes)
         const filePath = path.join(process.cwd(), 'public/img', photo.name)
         writeFile(filePath, buffer)
-        // console.log("File save at", filePath)
-
-        // console.log(filePath)
         
-        // console.log(file);
-        // console.log(formData);
-
         const newPet = await prisma.pets.create({
-                    // data: formData
-                    // data: {
-                    //   race_id: { connect: { id: raza }},
-                    //   category_id: { connect: { id: categoria }},
-                    //   gender_id: { connect: { id: genero }},
-                    //   photo: file,
-                    //   nombreMascota
-                    // }
-
+                    
                     data: {
                         nombreMascota: nombreMascota,
                         race: parseInt(raza), 
@@ -102,3 +87,21 @@ export async function POST(request) {
 }
 
 
+
+
+// console.log("Archivo en ", filePath)
+
+        // console.log(filePath)
+        
+        // console.log(file);
+        // console.log(formData);
+
+
+        // data: formData
+                    // data: {
+                    //   race_id: { connect: { id: raza }},
+                    //   category_id: { connect: { id: categoria }},
+                    //   gender_id: { connect: { id: genero }},
+                    //   photo: file,
+                    //   nombreMascota
+                    // }

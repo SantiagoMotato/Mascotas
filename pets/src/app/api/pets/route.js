@@ -16,7 +16,7 @@ export async function GET(){
                 nombreMascota: true
             }
         });
-        console.log(res)
+        // console.log(res)
         return new Response(JSON.stringify(res), {headers:{'Content-type':'application/json'}, status:200}); 
     } catch (error) {
         return new Response(JSON.stringify({"Meesage":"Error de metodo GET" + error,status:500}))

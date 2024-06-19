@@ -6,6 +6,7 @@ function MascotasPage({params}) {
 
   const router = useRouter();
   const [pets, setPets] = useState([]);
+  const [nombrePets, setNombrePet] = useState([]);
 
   const loadPets = async() => {
     const res = await fetch('http://localhost:3000/api/pets')
@@ -13,8 +14,16 @@ function MascotasPage({params}) {
     setPets(data)
   }
 
+  const loadNombres = async() => {
+    const res = await fetch('http://localhost:3000/api/pets/repeatedNames')
+    const data = await res.json()
+    setNombrePet(data)
+    console.log(data)
+  }
+
   useEffect(() => {
     loadPets();
+    loadNombres();
   }, [/* pets */]); // Empty dependency array means this effect runs only once, on mount
 
   return (
@@ -34,6 +43,16 @@ function MascotasPage({params}) {
                   router.push('/new_mascota')
               }}>Adicionar</button>
               </div>
+
+              { nombrePets.map(nombrePet => (
+                <div className="bg-slate-400 mx-8 mt-4 p-1 rounded-xl" key={nombrePets.id}>
+                  
+                  <p className="font-semibold">Nombre repetido: <span className="text-blue-950 font-bold">{nombrePet.nombreMascota}</span></p>
+                  <p className="font-semibold">Cantidad: <span  className="text-blue-950 font-bold">{nombrePet.count}</span></p>
+              
+                </div>
+                ))
+              }
 
               <div className="mt-6">
                 {

@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export async function GET() {
     try {
        
-        const res = await prisma.$queryRaw`
+        const res = await prisma.$queryRaw` /* $queryRaw en como una funcion de Prisma que permite ejecutar consultas SQL */
             SELECT nombreMascota, COUNT(*) as count
             FROM pets
             GROUP BY nombreMascota
